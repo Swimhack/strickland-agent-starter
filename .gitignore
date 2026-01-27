@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+
+# Environment & secrets
+.env
+.env.*
+config/config.json
+*.key
+*.pem
+
+# Workspace runtime data
+workspace/memory/
+workspace/MEMORY.md
+workspace/data/
+workspace/TOOLS.md
+
+# Media & generated files
+*.mp3
+*.wav
+*.ogg
+*.mp4
+media/
+
+# WhatsApp session
+data/
+.wwebjs_auth/
+.wwebjs_cache/
+
+# ngrok
+ngrok*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/

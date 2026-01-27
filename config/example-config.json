@@ -1,0 +1,134 @@
+{
+  "gateway": {
+    "port": 3456,
+    "host": "0.0.0.0",
+    "auth": {
+      "token": "YOUR_GATEWAY_TOKEN_HERE"
+    }
+  },
+
+  "agent": {
+    "name": "agent",
+    "model": "anthropic/claude-sonnet-4-20250514",
+    "defaultModel": "anthropic/claude-sonnet-4-20250514",
+    "thinkingModel": "anthropic/claude-opus-4-5",
+    "workspace": "./workspace",
+    "contextFiles": ["AGENTS.md", "TOOLS.md"],
+    "maxTokens": 8192,
+    "temperature": 0.7
+  },
+
+  "channels": {
+    "whatsapp": {
+      "enabled": true,
+      "provider": "whatsapp-web",
+      "sessionPath": "./data/whatsapp-session",
+      "allowedNumbers": [
+        "YOUR_PHONE_NUMBER_HERE"
+      ],
+      "defaultTarget": "YOUR_PHONE_NUMBER_HERE"
+    }
+  },
+
+  "plugins": {
+    "voice-call": {
+      "enabled": true,
+      "provider": "telnyx",
+      "apiKey": "YOUR_TELNYX_API_KEY_HERE",
+      "connectionId": "YOUR_TELNYX_CONNECTION_ID_HERE",
+      "phoneNumber": "+1YOUR_TELNYX_PHONE_NUMBER",
+      "webhookUrl": "https://YOUR_DOMAIN/voice/webhook",
+      "tts": {
+        "provider": "elevenlabs",
+        "apiKey": "YOUR_ELEVENLABS_API_KEY_HERE",
+        "voiceId": "YOUR_ELEVENLABS_VOICE_ID_HERE",
+        "model": "eleven_turbo_v2_5"
+      },
+      "stt": {
+        "provider": "deepgram",
+        "apiKey": "YOUR_DEEPGRAM_API_KEY_HERE",
+        "model": "nova-2"
+      },
+      "conversation": {
+        "mode": "conversation",
+        "maxDurationSeconds": 600,
+        "silenceTimeoutMs": 2000,
+        "greeting": "Hi, this is your AI agent. How can I help you today?"
+      }
+    },
+
+    "tts": {
+      "enabled": true,
+      "provider": "elevenlabs",
+      "apiKey": "YOUR_ELEVENLABS_API_KEY_HERE",
+      "voiceId": "YOUR_ELEVENLABS_VOICE_ID_HERE",
+      "model": "eleven_turbo_v2_5"
+    },
+
+    "email": {
+      "enabled": true,
+      "imap": {
+        "host": "imap.YOUR_EMAIL_PROVIDER.com",
+        "port": 993,
+        "user": "YOUR_EMAIL_ADDRESS",
+        "password": "YOUR_EMAIL_PASSWORD_HERE"
+      },
+      "send": {
+        "method": "api",
+        "provider": "YOUR_EMAIL_PROVIDER",
+        "apiKey": "YOUR_EMAIL_API_KEY_HERE",
+        "fromAddress": "YOUR_EMAIL_ADDRESS",
+        "fromName": "Your Name"
+      }
+    },
+
+    "browser": {
+      "enabled": true,
+      "headless": true
+    },
+
+    "calendar": {
+      "enabled": true,
+      "provider": "google",
+      "credentialsPath": "./data/google-credentials.json",
+      "calendarId": "YOUR_GOOGLE_CALENDAR_ID"
+    }
+  },
+
+  "cron": {
+    "heartbeat": {
+      "schedule": "*/30 * * * *",
+      "prompt": "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK.",
+      "channel": "whatsapp"
+    },
+    "morning-briefing": {
+      "schedule": "0 8 * * 1-5",
+      "prompt": "Prepare a morning briefing: today's calendar, pending follow-ups, overnight emails worth noting. Send to main channel.",
+      "channel": "whatsapp",
+      "model": "anthropic/claude-sonnet-4-20250514"
+    },
+    "weekly-outreach": {
+      "schedule": "0 9 * * 1",
+      "prompt": "Review the outreach pipeline in memory/outreach/. Send any scheduled follow-ups. Generate a weekly outreach summary.",
+      "channel": "whatsapp",
+      "model": "anthropic/claude-sonnet-4-20250514"
+    }
+  },
+
+  "llm": {
+    "anthropic": {
+      "apiKey": "YOUR_ANTHROPIC_API_KEY_HERE"
+    },
+    "openai": {
+      "apiKey": "YOUR_OPENAI_API_KEY_HERE"
+    }
+  },
+
+  "security": {
+    "allowedUsers": ["YOUR_USER_ID_HERE"],
+    "rateLimiting": {
+      "maxRequestsPerMinute": 30,
+      "maxTokensPerHour": 500000
+    }
+  }
+}
