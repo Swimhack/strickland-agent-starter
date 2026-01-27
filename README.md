@@ -113,7 +113,8 @@ strickland-agent-starter/
 │   └── config-guide.md          # Every option explained
 ├── workflows/
 │   ├── outreach-automation.md   # Email campaigns & sequences
-│   ├── voice-agent.md           # Phone call setup
+│   ├── voice-agent-twilio.md    # Phone call setup (Twilio — recommended)
+│   ├── voice-agent.md           # Phone call setup (Telnyx — alternative)
 │   └── email-integration.md     # Email read/send setup
 ├── scripts/
 │   ├── setup.sh                 # One-command setup
