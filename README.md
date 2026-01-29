@@ -4,7 +4,7 @@
 
 ### Deploy Your AI Business Agent in Minutes
 
-An open-source template for building autonomous AI business agents that make phone calls, send emails, run outreach campaigns, and remember everything — powered by [Moltbot](https://molt.bot).
+An open-source template for building autonomous AI business agents that make phone calls, send emails, run outreach campaigns, and remember everything.
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Built by Strickland AI](https://img.shields.io/badge/built%20by-Strickland%20AI-black)](https://stricklandai.com)
@@ -48,7 +48,7 @@ cp config/example-config.json config/config.json
 nano config/config.json
 
 # 5. Start your agent
-moltbot start
+./start.sh
 ```
 
 That's it. Your agent is live.
@@ -109,7 +109,7 @@ strickland-agent-starter/
 │   ├── USER.md                  # Human profile template
 │   └── HEARTBEAT.md             # Proactive checks config
 ├── config/
-│   ├── example-config.json      # Moltbot configuration
+│   ├── example-config.json      # Agent configuration
 │   └── config-guide.md          # Every option explained
 ├── workflows/
 │   ├── outreach-automation.md   # Email campaigns & sequences
@@ -128,9 +128,9 @@ strickland-agent-starter/
 
 > *Coming soon — screenshots of agent conversations, voice call logs, and outreach dashboards.*
 
-## Why Moltbot?
+## How It Works
 
-[Moltbot](https://molt.bot) is the runtime that powers this agent. It handles:
+This starter provides a complete AI agent architecture:
 
 - **LLM orchestration** — Claude, GPT, or any model via API
 - **Channel routing** — WhatsApp, voice, email, Discord, Telegram
@@ -138,7 +138,7 @@ strickland-agent-starter/
 - **Cron & heartbeat** — Scheduled tasks and proactive behavior
 - **Memory management** — File-based persistence that survives restarts
 
-Think of Moltbot as the operating system. This starter repo is the personality, config, and workflows that make it *your* agent.
+The starter handles the infrastructure. You define the personality, config, and workflows that make it *your* agent.
 
 ## 🔒 Security
 
@@ -153,7 +153,7 @@ AI agents are powerful — and power requires responsibility. Recent security re
 | **Reverse proxy misconfig** | Internet traffic treated as localhost (auto-auth bypass) | Enable `gateway.authToken` immediately. Don't rely on IP-based trust. |
 | **Skill library poisoning** | Malicious skills on ClawdHub can execute code | We don't auto-install skills. Review any skill before adding. Pin versions. |
 | **Prompt injection** | Malicious messages via WhatsApp/email trigger unintended actions | Configure `exec.security: "allowlist"` to restrict commands. Use `exec.ask: "always"` for destructive ops. |
-| **Infostealer targeting** | Malware specifically hunting Moltbot directories | Run your agent in a dedicated VM or container. Don't run on your primary workstation with banking sessions. |
+| **Infostealer targeting** | Malware hunting AI agent directories | Run your agent in a dedicated VM or container. Don't run on your primary workstation with banking sessions. |
 
 ### Security Checklist
 
@@ -209,8 +209,8 @@ We open-sourced it because the agent space needs fewer demos and more operators.
 
 **Links:**
 - 🌐 [stricklandai.com](https://stricklandai.com)
-- 🤖 [molt.bot](https://molt.bot) — The Moltbot runtime
 - 🐦 [@staboratory](https://x.com/staboratory)
+- 📖 [Documentation](docs/)
 
 ## License
 

@@ -4,7 +4,7 @@ AI agents with system access are high-value targets. This guide covers the speci
 
 ## Recent Security Research
 
-In January 2026, multiple security firms published research on Moltbot/Clawdbot deployments:
+In January 2026, multiple security firms published research on self-hosted AI agent deployments:
 
 - **Dvuln** — Found hundreds of exposed instances leaking secrets via misconfigured proxies
 - **Hudson Rock** — Identified plaintext credential storage vulnerable to infostealers
@@ -112,7 +112,7 @@ export OPENAI_API_KEY="sk-..."
 gpg --symmetric --cipher-algo AES256 config.json
 # Decrypt before starting
 gpg --decrypt config.json.gpg > config.json
-moltbot start
+./start.sh
 rm config.json  # Don't leave decrypted
 ```
 
@@ -166,7 +166,7 @@ skills/
 ## 5. Command Execution
 
 ### The Risk
-Moltbot can run shell commands. A prompt injection attack could execute `rm -rf /` or exfiltrate data via `curl`.
+AI agents can run shell commands. A prompt injection attack could execute `rm -rf /` or exfiltrate data via `curl`.
 
 ### The Fix
 
@@ -213,8 +213,8 @@ Moltbot can run shell commands. A prompt injection attack could execute `rm -rf 
 **Run as unprivileged user:**
 ```bash
 # Create dedicated user
-sudo useradd -m -s /bin/bash moltbot
-sudo -u moltbot moltbot start
+sudo useradd -m -s /bin/bash aiagent
+sudo -u aiagent ./start.sh
 ```
 
 ---
@@ -267,10 +267,11 @@ Running on your primary machine means a compromised agent has access to everythi
 **Containerization:**
 ```dockerfile
 FROM node:20-slim
-RUN npm install -g moltbot
+WORKDIR /app
+COPY . .
+RUN npm install
 USER node
-WORKDIR /home/node/agent
-CMD ["moltbot", "start"]
+CMD ["./start.sh"]
 ```
 
 **VM isolation:**
@@ -294,10 +295,10 @@ CMD ["moltbot", "start"]
 netstat -an | grep ESTABLISHED | grep -v localhost
 
 # File access outside workspace
-auditctl -w /home -p rwxa -k moltbot-access
+auditctl -w /home -p rwxa -k agent-access
 
 # Command execution logs
-tail -f ~/.moltbot/logs/exec.log
+tail -f ./logs/exec.log
 ```
 
 **Alert on:**
@@ -312,10 +313,10 @@ tail -f ~/.moltbot/logs/exec.log
 
 If you suspect compromise:
 
-1. **Stop the agent immediately:** `moltbot stop` or `pkill -f moltbot`
+1. **Stop the agent immediately:** `./stop.sh` or `pkill -f node`
 2. **Isolate the machine** from network
 3. **Rotate all credentials** — API keys, OAuth tokens, passwords
-4. **Check logs** for unauthorized access: `~/.moltbot/logs/`
+4. **Check logs** for unauthorized access: `./logs/`
 5. **Review memory files** for exfiltrated data
 6. **Scan for malware** — infostealers may persist
 7. **Redeploy fresh** on clean system
@@ -341,9 +342,9 @@ Before going live:
 
 ## Further Reading
 
-- [Moltbot Security Docs](https://docs.molt.bot/gateway/security)
 - [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 - [Prompt Injection Defenses](https://simonwillison.net/2022/Sep/12/prompt-injection/)
+- [Anthropic Claude Security Best Practices](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering)
 
 ---
 
