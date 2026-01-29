@@ -140,6 +140,59 @@ strickland-agent-starter/
 
 Think of Moltbot as the operating system. This starter repo is the personality, config, and workflows that make it *your* agent.
 
+## 🔒 Security
+
+AI agents are powerful — and power requires responsibility. Recent security research has highlighted risks with self-hosted AI assistants. **This starter addresses those concerns head-on.**
+
+### The Concerns (and Our Answers)
+
+| Concern | Risk | This Starter's Approach |
+|---------|------|------------------------|
+| **Exposed admin ports** | Hundreds of instances found publicly accessible | Our config defaults to `localhost` binding only. Never expose port 18860 to the internet without VPN/tunnel + auth. |
+| **Plaintext secrets** | API keys in Markdown/JSON files | Use environment variables or encrypted secret stores. Our `.gitignore` excludes all sensitive files. Never commit `config.json`. |
+| **Reverse proxy misconfig** | Internet traffic treated as localhost (auto-auth bypass) | Enable `gateway.authToken` immediately. Don't rely on IP-based trust. |
+| **Skill library poisoning** | Malicious skills on ClawdHub can execute code | We don't auto-install skills. Review any skill before adding. Pin versions. |
+| **Prompt injection** | Malicious messages via WhatsApp/email trigger unintended actions | Configure `exec.security: "allowlist"` to restrict commands. Use `exec.ask: "always"` for destructive ops. |
+| **Infostealer targeting** | Malware specifically hunting Moltbot directories | Run your agent in a dedicated VM or container. Don't run on your primary workstation with banking sessions. |
+
+### Security Checklist
+
+Before going live, verify:
+
+```bash
+# ✅ Auth token is set (not empty)
+grep -q '"authToken":' config/config.json && echo "Auth configured"
+
+# ✅ Gateway binds to localhost only
+grep -q '"host": "127.0.0.1"' config/config.json && echo "Localhost only"
+
+# ✅ Exec restricted to allowlist
+grep -q '"security": "allowlist"' config/config.json && echo "Exec restricted"
+
+# ✅ No secrets in git
+git status --porcelain | grep -v '^\?\?' | grep -E '\.(json|env)$' && echo "WARNING: secrets may be staged"
+```
+
+### Deployment Best Practices
+
+1. **Isolate your agent** — Dedicated VM, VPS, or Mac Mini. Not your daily driver.
+2. **Use a VPN/tunnel** — If remote access needed, use Tailscale/WireGuard, not port forwarding.
+3. **Enable auth immediately** — Set `gateway.authToken` before first boot.
+4. **Restrict exec** — Use `allowlist` mode, enumerate safe commands explicitly.
+5. **Monitor logs** — Watch for unexpected command execution or outbound connections.
+6. **Rotate credentials** — If you suspect exposure, rotate all API keys immediately.
+7. **Backup memory** — Your agent's memory is valuable. Backup `memory/` and `MEMORY.md` regularly.
+
+### What We Don't Do
+
+- ❌ Auto-install skills from the internet
+- ❌ Store secrets in plaintext by default (use env vars)
+- ❌ Expose admin ports publicly
+- ❌ Trust "localhost" through reverse proxies without verification
+- ❌ Allow unrestricted shell execution
+
+Security is a feature, not an afterthought. For detailed hardening, see [docs/security.md](docs/security.md).
+
 ## Use Cases
 
 - **Sales teams** — Automated outreach sequences with AI follow-ups

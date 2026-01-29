@@ -1,10 +1,10 @@
 {
+  "_comment": "SECURITY: Review docs/security.md before deploying. Never commit this file with real keys.",
+
   "gateway": {
-    "port": 3456,
-    "host": "0.0.0.0",
-    "auth": {
-      "token": "YOUR_GATEWAY_TOKEN_HERE"
-    }
+    "port": 18860,
+    "host": "127.0.0.1",
+    "authToken": "CHANGE_ME_USE_openssl_rand_-hex_32"
   },
 
   "agent": {
@@ -18,35 +18,47 @@
     "temperature": 0.7
   },
 
+  "exec": {
+    "_comment": "SECURITY: Use allowlist mode to restrict command execution",
+    "security": "allowlist",
+    "allowlist": [
+      "ls", "cat", "head", "tail", "grep", "find",
+      "git status", "git log", "git diff",
+      "date", "whoami", "pwd"
+    ],
+    "ask": "on-miss"
+  },
+
   "channels": {
     "whatsapp": {
       "enabled": true,
       "provider": "whatsapp-web",
       "sessionPath": "./data/whatsapp-session",
       "allowedNumbers": [
-        "YOUR_PHONE_NUMBER_HERE"
+        "+1YOUR_PHONE_NUMBER"
       ],
-      "defaultTarget": "YOUR_PHONE_NUMBER_HERE"
+      "defaultTarget": "+1YOUR_PHONE_NUMBER"
     }
   },
 
   "plugins": {
     "voice-call": {
-      "enabled": true,
+      "enabled": false,
+      "_comment": "Enable after reviewing voice-agent.md setup guide",
       "provider": "telnyx",
-      "apiKey": "YOUR_TELNYX_API_KEY_HERE",
-      "connectionId": "YOUR_TELNYX_CONNECTION_ID_HERE",
-      "phoneNumber": "+1YOUR_TELNYX_PHONE_NUMBER",
+      "apiKey": "${TELNYX_API_KEY}",
+      "connectionId": "${TELNYX_CONNECTION_ID}",
+      "phoneNumber": "+1YOUR_TELNYX_NUMBER",
       "webhookUrl": "https://YOUR_DOMAIN/voice/webhook",
       "tts": {
         "provider": "elevenlabs",
-        "apiKey": "YOUR_ELEVENLABS_API_KEY_HERE",
-        "voiceId": "YOUR_ELEVENLABS_VOICE_ID_HERE",
+        "apiKey": "${ELEVENLABS_API_KEY}",
+        "voiceId": "${ELEVENLABS_VOICE_ID}",
         "model": "eleven_turbo_v2_5"
       },
       "stt": {
         "provider": "deepgram",
-        "apiKey": "YOUR_DEEPGRAM_API_KEY_HERE",
+        "apiKey": "${DEEPGRAM_API_KEY}",
         "model": "nova-2"
       },
       "conversation": {
@@ -58,27 +70,26 @@
     },
 
     "tts": {
-      "enabled": true,
-      "provider": "elevenlabs",
-      "apiKey": "YOUR_ELEVENLABS_API_KEY_HERE",
-      "voiceId": "YOUR_ELEVENLABS_VOICE_ID_HERE",
-      "model": "eleven_turbo_v2_5"
+      "enabled": false,
+      "provider": "openai",
+      "voice": "echo"
     },
 
     "email": {
-      "enabled": true,
+      "enabled": false,
+      "_comment": "Enable after reviewing email-integration.md",
       "imap": {
-        "host": "imap.YOUR_EMAIL_PROVIDER.com",
+        "host": "imap.YOUR_PROVIDER.com",
         "port": 993,
-        "user": "YOUR_EMAIL_ADDRESS",
-        "password": "YOUR_EMAIL_PASSWORD_HERE"
+        "user": "${EMAIL_USER}",
+        "password": "${EMAIL_PASSWORD}"
       },
       "send": {
         "method": "api",
-        "provider": "YOUR_EMAIL_PROVIDER",
-        "apiKey": "YOUR_EMAIL_API_KEY_HERE",
-        "fromAddress": "YOUR_EMAIL_ADDRESS",
-        "fromName": "Your Name"
+        "provider": "YOUR_PROVIDER",
+        "apiKey": "${EMAIL_API_KEY}",
+        "fromAddress": "you@example.com",
+        "fromName": "Your Agent"
       }
     },
 
@@ -88,10 +99,10 @@
     },
 
     "calendar": {
-      "enabled": true,
+      "enabled": false,
       "provider": "google",
       "credentialsPath": "./data/google-credentials.json",
-      "calendarId": "YOUR_GOOGLE_CALENDAR_ID"
+      "calendarId": "primary"
     }
   },
 
@@ -100,32 +111,21 @@
       "schedule": "*/30 * * * *",
       "prompt": "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK.",
       "channel": "whatsapp"
-    },
-    "morning-briefing": {
-      "schedule": "0 8 * * 1-5",
-      "prompt": "Prepare a morning briefing: today's calendar, pending follow-ups, overnight emails worth noting. Send to main channel.",
-      "channel": "whatsapp",
-      "model": "anthropic/claude-sonnet-4-20250514"
-    },
-    "weekly-outreach": {
-      "schedule": "0 9 * * 1",
-      "prompt": "Review the outreach pipeline in memory/outreach/. Send any scheduled follow-ups. Generate a weekly outreach summary.",
-      "channel": "whatsapp",
-      "model": "anthropic/claude-sonnet-4-20250514"
     }
   },
 
   "llm": {
+    "_comment": "SECURITY: Use environment variables, not hardcoded keys",
     "anthropic": {
-      "apiKey": "YOUR_ANTHROPIC_API_KEY_HERE"
+      "apiKey": "${ANTHROPIC_API_KEY}"
     },
     "openai": {
-      "apiKey": "YOUR_OPENAI_API_KEY_HERE"
+      "apiKey": "${OPENAI_API_KEY}"
     }
   },
 
   "security": {
-    "allowedUsers": ["YOUR_USER_ID_HERE"],
+    "allowedUsers": ["+1YOUR_PHONE_NUMBER"],
     "rateLimiting": {
       "maxRequestsPerMinute": 30,
       "maxTokensPerHour": 500000
