@@ -69,7 +69,7 @@ For the full walkthrough, see [Getting Started](docs/getting-started.md).
 │        └───────────┬───┘──────────────┘                  │
 │                    ▼                                     │
 │  ┌─────────────────────────────────────┐                 │
-│  │         MOLTBOT GATEWAY             │                 │
+│  │         AGENT GATEWAY               │                 │
 │  │   (Agent Loop + LLM Orchestration)  │                 │
 │  └──────────┬──────────────────────────┘                 │
 │             │                                            │

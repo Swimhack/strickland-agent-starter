@@ -4,7 +4,7 @@ How to give your AI agent a phone number using Twilio. Recommended for most user
 
 ## Prerequisites
 
-- Moltbot installed and running
+- the agent installed and running
 - A Twilio account (free trial works for testing)
 - A public URL for webhooks (ngrok for dev, domain for production)
 
@@ -33,7 +33,7 @@ How to give your AI agent a phone number using Twilio. Recommended for most user
 
 **Recommendation:** Start with trial to test, upgrade before going live. The $20 deposit covers months of usage for most agents.
 
-### 3. Configure Moltbot
+### 3. Configure the agent
 
 Add the voice-call plugin to your `config.json`:
 
@@ -77,7 +77,7 @@ Add the voice-call plugin to your `config.json`:
 
 ### 4. Set Up Webhooks
 
-Twilio needs to reach your Moltbot instance when calls come in.
+Twilio needs to reach your the agent instance when calls come in.
 
 **Development (ngrok):**
 ```bash
@@ -102,7 +102,7 @@ ngrok http 18800
 
 ### 5. Security — Validate Twilio Signatures
 
-Twilio signs every webhook request. Moltbot validates these automatically when you provide your Auth Token. This prevents anyone from sending fake call events to your webhook.
+Twilio signs every webhook request. the agent validates these automatically when you provide your Auth Token. This prevents anyone from sending fake call events to your webhook.
 
 **Never expose your Auth Token publicly.** Keep it in your config file, which should be in `.gitignore`.
 
@@ -117,7 +117,7 @@ Your agent should answer and greet you.
 **Outbound test:**
 ```
 Message your agent: "Call me at +1YOURNUMBER"
-Or use the CLI: moltbot eval "Call +1YOURNUMBER and say hello"
+Or use the CLI: agent-cli eval "Call +1YOURNUMBER and say hello"
 ```
 
 ## Conversation Modes
@@ -166,7 +166,7 @@ Before upgrading, be aware:
 | "Cannot make calls to unverified numbers" | Trial account | Verify the number or upgrade account |
 | Calls go straight to voicemail | Webhook not configured | Check Twilio Console number settings |
 | Agent answers but no audio | TTS not configured | Check OpenAI API key in config |
-| Agent can't hear caller | STT not starting | Check Moltbot gateway logs |
+| Agent can't hear caller | STT not starting | Check the agent gateway logs |
 | "Invalid Auth Token" | Wrong credentials | Re-copy from Twilio Console |
 | Webhook returns 404 | Wrong path | Ensure publicUrl includes `/voice` |
 | Call drops after greeting | Response timeout | Increase `responseTimeoutMs` |

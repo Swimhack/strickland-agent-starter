@@ -9,7 +9,7 @@ How to give your AI agent a phone number it can answer and make calls from.
 | Phone number + SIP | [Telnyx](https://telnyx.com) | Telephony infrastructure |
 | Text-to-Speech | [ElevenLabs](https://elevenlabs.io) | Neural voice for the agent |
 | Speech-to-Text | [Deepgram](https://deepgram.com) | Real-time transcription |
-| Orchestration | Moltbot | Conversation logic + memory |
+| Orchestration | the agent | Conversation logic + memory |
 
 ## Setup Steps
 
@@ -46,7 +46,7 @@ How to give your AI agent a phone number it can answer and make calls from.
 
 ### 4. Webhook Setup
 
-Your Moltbot gateway needs a public URL for Telnyx to send call events to.
+Your the agent gateway needs a public URL for Telnyx to send call events to.
 
 **Development (ngrok):**
 ```bash
@@ -62,7 +62,7 @@ This starts ngrok and configures the webhook automatically.
 - Set up HTTPS (Let's Encrypt / Caddy / nginx)
 - Configure webhook URL: `https://agent.yourdomain.com/voice/webhook`
 
-### 5. Configure Moltbot
+### 5. Configure the agent
 
 Update your `config.json` with the voice-call plugin settings (see [config-guide.md](../config/config-guide.md#voice-call-telnyx)).
 
@@ -70,7 +70,7 @@ Update your `config.json` with the voice-call plugin settings (see [config-guide
 
 ```bash
 # Make a test call from the agent
-moltbot eval "Call +1YOURNUMBER and say hello"
+agent-cli eval "Call +1YOURNUMBER and say hello"
 
 # Or call your Telnyx number from any phone
 ```

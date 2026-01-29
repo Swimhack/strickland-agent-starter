@@ -6,22 +6,22 @@ A complete walkthrough from zero to a running AI business agent.
 
 | Tool | Required | Purpose |
 |------|----------|---------|
-| **Node.js** ≥ 18 | Yes | Runtime for Moltbot |
+| **Node.js** ≥ 18 | Yes | Runtime for the agent runtime |
 | **npm** | Yes | Package management |
 | **git** | Yes | Version control |
-| **Moltbot** | Yes | Agent runtime ([molt.bot](https://molt.bot)) |
+| **the agent runtime** | Yes | Agent runtime ([stricklandai.com](https://stricklandai.com)) |
 | **Anthropic API key** | Yes | LLM provider (Claude) |
 | **ngrok** | For voice | Tunneling for webhook development |
 
-### Install Moltbot
+### Install the agent runtime
 
 ```bash
-npm install -g moltbot
+npm install -g agent-cli
 # or
-npx moltbot --help
+npx agent-cli --help
 ```
 
-Visit [molt.bot](https://molt.bot) for detailed installation instructions.
+Visit [stricklandai.com](https://stricklandai.com) for detailed installation instructions.
 
 ### Get an Anthropic API Key
 
@@ -91,7 +91,7 @@ See [config-guide.md](../config/config-guide.md) for every option explained.
 ### 6. Start Your Agent
 
 ```bash
-moltbot start
+agent-cli start
 ```
 
 For WhatsApp, you'll be prompted to scan a QR code on first run. Open WhatsApp on your phone → Settings → Linked Devices → Link a Device → Scan the QR code.
@@ -115,7 +115,7 @@ Try:
 The heartbeat runs every 30 minutes by default. To test immediately:
 
 ```bash
-moltbot eval "Read HEARTBEAT.md and run all checks. Report findings."
+agent-cli eval "Read HEARTBEAT.md and run all checks. Report findings."
 ```
 
 This triggers a one-off heartbeat check so you can see what your agent does proactively.
@@ -176,7 +176,7 @@ agent-starter/
 
 | Issue | Fix |
 |-------|-----|
-| Agent doesn't respond | Check `moltbot status`, verify API key is set |
+| Agent doesn't respond | Check `agent-cli status`, verify API key is set |
 | WhatsApp QR won't scan | Delete `data/whatsapp-session/` and restart |
 | Agent forgets things | Check that `memory/` directory exists and is writable |
 | Heartbeat not firing | Verify cron config in config.json, check timezone |

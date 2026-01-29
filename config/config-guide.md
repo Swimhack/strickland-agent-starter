@@ -6,7 +6,7 @@ A line-by-line explanation of `example-config.json`. Copy it to `config.json` an
 
 ```json
 "gateway": {
-  "port": 3456,        // Port the Moltbot gateway listens on
+  "port": 3456,        // Port the agent gateway listens on
   "host": "0.0.0.0",   // Bind address (0.0.0.0 = all interfaces)
   "auth": {
     "token": "..."     // Shared secret for authenticating API requests to the gateway

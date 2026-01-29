@@ -35,13 +35,13 @@ check_prereq "node" || MISSING=1
 check_prereq "npm" || MISSING=1
 check_prereq "git" || MISSING=1
 
-# Check for moltbot (optional but recommended)
-if command -v moltbot &> /dev/null; then
-    echo -e "  ${GREEN}✓${NC} moltbot found"
-elif command -v clawdbot &> /dev/null; then
-    echo -e "  ${YELLOW}~${NC} clawdbot found (moltbot alias)"
+# Check for agent-cli (optional but recommended)
+if command -v agent-cli &> /dev/null; then
+    echo -e "  ${GREEN}✓${NC} agent-cli found"
+elif command -v agent-cli &> /dev/null; then
+    echo -e "  ${YELLOW}~${NC} agent-cli found (agent-cli alias)"
 else
-    echo -e "  ${YELLOW}~${NC} moltbot not found — install from https://molt.bot"
+    echo -e "  ${YELLOW}~${NC} agent-cli not found — install from https://stricklandai.com"
 fi
 
 if [ "$MISSING" -eq 1 ]; then
@@ -193,7 +193,7 @@ echo "Next steps:"
 echo "  1. Edit workspace/SOUL.md — define your agent's personality"
 echo "  2. Edit workspace/USER.md — tell the agent about yourself"
 echo "  3. Edit config/config.json — add remaining API keys"
-echo "  4. Run: moltbot start"
+echo "  4. Run: agent-cli start"
 echo ""
 echo "Guides:"
 echo "  • Full walkthrough:  docs/getting-started.md"

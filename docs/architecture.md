@@ -6,7 +6,7 @@ How the AI agent system works under the hood.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                        MOLTBOT                               │
+│                        AGENT GATEWAY                               │
 │                                                              │
 │  ┌────────────────────────────────────────────────────────┐  │
 │  │                    GATEWAY                              │  │
@@ -51,7 +51,7 @@ How the AI agent system works under the hood.
 
 ### The Gateway
 
-The Moltbot gateway is a long-running process that:
+The the agent runtime gateway is a long-running process that:
 - Listens for incoming messages across all channels
 - Manages plugin lifecycle (voice, TTS, browser, etc.)
 - Routes messages to the agent loop
@@ -104,7 +104,7 @@ This mirrors how human memory works: you experience things (daily logs), sleep o
 For phone calls, the pipeline adds real-time audio processing:
 
 ```
-Phone Call ──► Telnyx (SIP) ──► Moltbot Gateway
+Phone Call ──► Telnyx (SIP) ──► the agent runtime Gateway
                                       │
                     ┌─────────────────┤
                     ▼                 ▼
