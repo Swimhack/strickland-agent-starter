@@ -2,9 +2,9 @@
 
 # 🤖 Strickland AI Agent Starter
 
-### Deploy Your AI Business Agent in Minutes
+### Your Personal AI That Never Sleeps
 
-An open-source template for building autonomous AI business agents that make phone calls, send emails, run outreach campaigns, and remember everything.
+A personal AI assistant runs 24/7 on a protected cloud server with backup power, automatically restarting if anything goes wrong. You message it through apps you already use — WhatsApp, Telegram — and it instantly responds, handles tasks, searches the web, and keeps your projects moving while you sleep.
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Built by Strickland AI](https://img.shields.io/badge/built%20by-Strickland%20AI-black)](https://stricklandai.com)
