@@ -38,6 +38,53 @@ Built on OpenClaw. Runs on your own infrastructure. 100% private.
 
 ---
 
+## 🔒 Security First
+
+**AI agents are powerful — and power requires responsibility.** Recent security research has highlighted risks with self-hosted AI assistants. This starter addresses those concerns head-on.
+
+### The Concerns (and Our Answers)
+
+| Concern | Risk | This Starter's Approach |
+|---------|------|------------------------|
+| **Exposed admin ports** | Hundreds of instances found publicly accessible | Our config defaults to localhost binding only. Never expose port 18860 to the internet without VPN/tunnel + auth. |
+| **Plaintext secrets** | API keys in Markdown/JSON files | Use environment variables or encrypted secret stores. Our `.gitignore` excludes all sensitive files. Never commit `config.json`. |
+| **Reverse proxy misconfig** | Internet traffic treated as localhost (auto-auth bypass) | Enable `gateway.authToken` immediately. Don't rely on IP-based trust. |
+| **Skill library poisoning** | Malicious skills on ClawdHub can execute code | We don't auto-install skills. Review any skill before adding. Pin versions. |
+| **Prompt injection** | Malicious messages via WhatsApp/email trigger unintended actions | Configure `exec.security: "allowlist"` to restrict commands. Use `exec.ask: "always"` for destructive ops. |
+| **Infostealer targeting** | Malware hunting AI agent directories | Run your agent in a dedicated VM or container. Don't run on your primary workstation with banking sessions. |
+
+### Security Checklist
+
+Before going live, verify:
+
+```bash
+# ✅ Auth token is set (not empty)
+grep -q '"authToken":' config/openclaw.json && echo "✅ Auth configured" || echo "❌ Set authToken!"
+
+# ✅ Gateway binds to localhost only
+grep -q '"host": "127.0.0.1"' config/openclaw.json && echo "✅ Localhost only" || echo "⚠️ Exposed to internet!"
+
+# ✅ Exec restricted to allowlist
+grep -q '"security": "allowlist"' config/openclaw.json && echo "✅ Exec restricted" || echo "⚠️ Unrestricted exec!"
+
+# ✅ No secrets in git
+git status --porcelain | grep -v '^\?\?' | grep -E '\.(json|env)$' && echo "⚠️ WARNING: secrets may be staged" || echo "✅ Clean"
+```
+
+### Recommended Security Posture
+
+1. **Never expose to public internet directly** - Use Tailscale/WireGuard/SSH tunnel
+2. **Enable authentication** - Set strong `authToken` in config
+3. **Use environment variables** - Keep API keys out of config files
+4. **Review skills before installation** - Treat like installing software
+5. **Run in dedicated VM/container** - Isolate from personal data
+6. **Keep updated** - Security patches matter
+7. **Monitor logs** - Watch for suspicious activity
+
+**Bottom line:** This is a powerful tool. Use it responsibly. If you're deploying for a team or organization, consult a security professional.
+
+---
+
 ## 🚀 Quick Start
 
 ### Prerequisites
