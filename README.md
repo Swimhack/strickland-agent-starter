@@ -2,7 +2,7 @@
 
 **Your personal AI agent - like JARVIS, but yours to own.**
 
-Built on OpenClaw. Runs on your own infrastructure. 100% private.
+Runs on your own infrastructure. 100% private.
 
 ---
 
