@@ -35,6 +35,7 @@ Runs on your own infrastructure. 100% private.
 - 🎙️ **Custom Voice Agents** - Create AI agents with any personality
 - 📊 **CRM Integration** - Track leads and touchpoints
 - 🤖 **Sub-Agents** - Spawn background tasks with isolated context
+- 🔄 **Product Maintainer** - Automatically sync your improvements to GitHub (NEW!)
 
 ---
 
@@ -372,6 +373,58 @@ docker run -d \
   --name my-agent \
   strickland-agent
 ```
+
+### 🔄 Product Maintainer (Auto-Sync to GitHub)
+
+**Turn your production improvements into product features automatically.**
+
+The Product Maintainer is a dedicated sub-agent that monitors your daily work and automatically syncs publishable features to your public GitHub repository - with full data sanitization.
+
+**How It Works:**
+1. You build a new feature during your daily work (e.g., email integration)
+2. Product Maintainer detects it that night (daily cron at 11 PM)
+3. Copies the code to your public repo
+4. **Sanitizes personal data** (API keys, phone numbers, addresses)
+5. Updates documentation automatically
+6. Commits and pushes to GitHub
+7. Notifies you: "🚀 Pushed email-inbox skill to GitHub (v2.0.2)"
+
+**Setup:**
+```bash
+# 1. Copy the agent definition
+cp -r agents/product-maintainer ~/.openclaw/workspace/agents/
+
+# 2. Configure your GitHub credentials
+export GITHUB_TOKEN="your_token_here"
+
+# 3. Set up daily cron job
+# Tell your agent: "Set up product maintainer to run daily at 11 PM"
+```
+
+**What Gets Sanitized:**
+- ❌ API keys (Vapi, OpenAI, Anthropic, Twilio, etc.)
+- ❌ Phone numbers and email addresses
+- ❌ Physical addresses
+- ❌ Customer names and business data
+- ✅ Replaces with environment variables and placeholders
+
+**Why This Matters:**
+- Every internal improvement becomes a sellable feature
+- Zero manual effort to maintain open-source version
+- Community sees active development (builds trust)
+- Your production work creates value for thousands of users
+
+**Manual Trigger:**
+```bash
+# Sanitize and push current work immediately
+./scripts/sanitize-for-github.sh
+cd your-public-repo
+git add .
+git commit -m "Add new feature"
+git push
+```
+
+See `agents/product-maintainer/AGENT.md` for full documentation.
 
 ---
 
