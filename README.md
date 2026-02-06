@@ -1,227 +1,402 @@
-<div align="center">
+# 🤖 Strickland Agent Starter
 
-# 🤖 Strickland AI Agent Starter
+**Your personal AI agent - like JARVIS, but yours to own.**
 
-### Your Personal AI That Never Sleeps
-
-A personal AI assistant runs 24/7 on a protected cloud server with backup power, automatically restarting if anything goes wrong. You message it through apps you already use — WhatsApp, Telegram — and it instantly responds, handles tasks, searches the web, and keeps your projects moving while you sleep.
-
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Built by Strickland AI](https://img.shields.io/badge/built%20by-Strickland%20AI-black)](https://stricklandai.com)
-
-[Quickstart](#-60-second-quickstart) · [Architecture](#-architecture) · [Docs](docs/) · [Contributing](CONTRIBUTING.md)
-
-</div>
+Built on OpenClaw. Runs on your own infrastructure. 100% private.
 
 ---
 
-## What This Does
+## 🎯 What Is This?
 
-This starter gives you a fully operational AI agent that runs 24/7 as your business operator:
+**Strickland Agent Starter** is a turnkey AI agent framework that gives you a personal assistant like JARVIS from Iron Man. It runs on your own server, connects to your accounts, and helps you with everything from emails to calendars to business automation.
 
-| Capability | Description |
-|---|---|
-| **📞 Voice Calls** | Inbound/outbound calls via Telnyx with neural TTS voices. Your agent answers the phone, has real conversations, takes notes. |
-| **📧 Email** | Reads inbox, drafts responses, sends outreach. Connects to any IMAP provider + API-based sending. |
-| **📱 WhatsApp** | Full WhatsApp Business integration. Your agent lives in your pocket. |
-| **🧠 Memory** | Daily logs + long-term curated memory. Your agent remembers every conversation, every decision, every follow-up. |
-| **👤 Personality** | Define your agent's soul — tone, values, expertise, boundaries. It's not a chatbot. It's *your* operator. |
-| **🔄 Heartbeat** | Proactive background checks — email, calendar, follow-ups, weather. Your agent works while you sleep. |
-| **📊 Outreach** | Automated campaign sequences with follow-up tracking, lead scoring, and CRM-style pipeline management. |
+**Think of it as:**
+- Your personal AI assistant that never sleeps
+- Proactive (checks things for you, reminds you, takes action)
+- Private (your data never leaves your server)
+- Extensible (add skills and integrations easily)
 
-## 🚀 60-Second Quickstart
+---
+
+## ✨ Features
+
+### Core Capabilities
+- 🧠 **Persistent Memory** - Remembers conversations, decisions, context
+- 💬 **Multi-Platform Messaging** - Telegram, Discord, Signal, WhatsApp
+- 📧 **Email Management** - Read, send, organize (Gmail, Outlook, Zoho)
+- 📅 **Calendar Integration** - Track events, set reminders
+- 🌐 **Web Research** - Search, fetch content, monitor sites
+- 📝 **File Management** - Read, write, organize your documents
+- ⚡ **Automation** - Cron jobs, webhooks, background tasks
+
+### Advanced Features (New!)
+- 📞 **AI Voice Calling** - Make and receive calls with custom AI personas
+- 💼 **Sales Outreach** - Automated voice/email/SMS campaigns (optional)
+- 🎙️ **Custom Voice Agents** - Create AI agents with any personality
+- 📊 **CRM Integration** - Track leads and touchpoints
+- 🤖 **Sub-Agents** - Spawn background tasks with isolated context
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Ubuntu/Debian VPS (4GB+ RAM recommended)
+- Node.js 18+
+- Basic command line knowledge
+
+### Installation
 
 ```bash
-# 1. Clone the repo
-git clone https://github.com/stricklandai/agent-starter.git
+# Clone the starter
+git clone https://github.com/stricklandtechnology/agent-starter.git
 cd agent-starter
 
-# 2. Run setup
-chmod +x scripts/setup.sh
-./scripts/setup.sh
+# Run setup script
+./setup.sh
 
-# 3. Edit your agent's personality
-nano templates/SOUL.md
-
-# 4. Add your API keys to config
-cp config/example-config.json config/config.json
-nano config/config.json
-
-# 5. Start your agent
-./start.sh
+# Follow prompts to configure:
+# - Your name and timezone
+# - Messaging platform (Telegram/Discord/etc.)
+# - AI provider (OpenAI, Anthropic, local)
+# - Optional integrations (email, calendar, voice)
 ```
 
-That's it. Your agent is live.
-
-For the full walkthrough, see [Getting Started](docs/getting-started.md).
-
-## 🏗 Architecture
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                    YOUR AI AGENT                         │
-│                                                          │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐              │
-│  │  SOUL.md  │  │  USER.md  │  │ MEMORY.md│              │
-│  │ (who am I)│  │ (who do I │  │ (what do │              │
-│  │           │  │  serve?)  │  │ I know?) │              │
-│  └─────┬─────┘  └─────┬─────┘  └─────┬────┘              │
-│        └───────────┬───┘──────────────┘                  │
-│                    ▼                                     │
-│  ┌─────────────────────────────────────┐                 │
-│  │         AGENT GATEWAY               │                 │
-│  │   (Agent Loop + LLM Orchestration)  │                 │
-│  └──────────┬──────────────────────────┘                 │
-│             │                                            │
-│  ┌──────────┼──────────────────────────┐                 │
-│  │          ▼          ▼          ▼    │                 │
-│  │  ┌────────────┐┌────────┐┌────────┐│                 │
-│  │  │  Voice Call ││ Email  ││WhatsApp││  ← Channels     │
-│  │  │  (Telnyx)  ││ (IMAP) ││ (WA)   ││                 │
-│  │  └────────────┘└────────┘└────────┘│                 │
-│  └─────────────────────────────────────┘                 │
-│                                                          │
-│  ┌─────────────────────────────────────┐                 │
-│  │         HEARTBEAT ENGINE            │                 │
-│  │  Email checks · Calendar · CRM      │  ← Proactive   │
-│  │  Follow-ups · Weather · Alerts      │                 │
-│  └─────────────────────────────────────┘                 │
-│                                                          │
-│  ┌─────────────────────────────────────┐                 │
-│  │         MEMORY SYSTEM               │                 │
-│  │  Daily logs → Long-term memory      │  ← Persistent  │
-│  │  memory/YYYY-MM-DD.md + MEMORY.md   │                 │
-│  └─────────────────────────────────────┘                 │
-└─────────────────────────────────────────────────────────┘
-```
-
-## 📁 Repository Structure
-
-```
-strickland-agent-starter/
-├── README.md                    # You are here
-├── LICENSE                      # MIT
-├── CONTRIBUTING.md              # How to contribute
-├── .gitignore
-├── templates/
-│   ├── SOUL.md                  # Agent personality template
-│   ├── AGENTS.md                # Workspace configuration
-│   ├── USER.md                  # Human profile template
-│   └── HEARTBEAT.md             # Proactive checks config
-├── config/
-│   ├── example-config.json      # Agent configuration
-│   └── config-guide.md          # Every option explained
-├── workflows/
-│   ├── outreach-automation.md   # Email campaigns & sequences
-│   ├── voice-agent-twilio.md    # Phone call setup (Twilio — recommended)
-│   ├── voice-agent.md           # Phone call setup (Telnyx — alternative)
-│   └── email-integration.md     # Email read/send setup
-├── scripts/
-│   ├── setup.sh                 # One-command setup
-│   └── deploy-voice.sh          # Voice webhook deployment
-└── docs/
-    ├── getting-started.md       # Full setup walkthrough
-    └── architecture.md          # How everything works
-```
-
-## 📸 Screenshots
-
-> *Coming soon — screenshots of agent conversations, voice call logs, and outreach dashboards.*
-
-## How It Works
-
-This starter provides a complete AI agent architecture:
-
-- **LLM orchestration** — Claude, GPT, or any model via API
-- **Channel routing** — WhatsApp, voice, email, Discord, Telegram
-- **Plugin system** — Voice calls, TTS, browser automation, calendar
-- **Cron & heartbeat** — Scheduled tasks and proactive behavior
-- **Memory management** — File-based persistence that survives restarts
-
-The starter handles the infrastructure. You define the personality, config, and workflows that make it *your* agent.
-
-## 🔒 Security
-
-AI agents are powerful — and power requires responsibility. Recent security research has highlighted risks with self-hosted AI assistants. **This starter addresses those concerns head-on.**
-
-### The Concerns (and Our Answers)
-
-| Concern | Risk | This Starter's Approach |
-|---------|------|------------------------|
-| **Exposed admin ports** | Hundreds of instances found publicly accessible | Our config defaults to `localhost` binding only. Never expose port 18860 to the internet without VPN/tunnel + auth. |
-| **Plaintext secrets** | API keys in Markdown/JSON files | Use environment variables or encrypted secret stores. Our `.gitignore` excludes all sensitive files. Never commit `config.json`. |
-| **Reverse proxy misconfig** | Internet traffic treated as localhost (auto-auth bypass) | Enable `gateway.authToken` immediately. Don't rely on IP-based trust. |
-| **Skill library poisoning** | Malicious skills on ClawdHub can execute code | We don't auto-install skills. Review any skill before adding. Pin versions. |
-| **Prompt injection** | Malicious messages via WhatsApp/email trigger unintended actions | Configure `exec.security: "allowlist"` to restrict commands. Use `exec.ask: "always"` for destructive ops. |
-| **Infostealer targeting** | Malware hunting AI agent directories | Run your agent in a dedicated VM or container. Don't run on your primary workstation with banking sessions. |
-
-### Security Checklist
-
-Before going live, verify:
-
-```bash
-# ✅ Auth token is set (not empty)
-grep -q '"authToken":' config/config.json && echo "Auth configured"
-
-# ✅ Gateway binds to localhost only
-grep -q '"host": "127.0.0.1"' config/config.json && echo "Localhost only"
-
-# ✅ Exec restricted to allowlist
-grep -q '"security": "allowlist"' config/config.json && echo "Exec restricted"
-
-# ✅ No secrets in git
-git status --porcelain | grep -v '^\?\?' | grep -E '\.(json|env)$' && echo "WARNING: secrets may be staged"
-```
-
-### Deployment Best Practices
-
-1. **Isolate your agent** — Dedicated VM, VPS, or Mac Mini. Not your daily driver.
-2. **Use a VPN/tunnel** — If remote access needed, use Tailscale/WireGuard, not port forwarding.
-3. **Enable auth immediately** — Set `gateway.authToken` before first boot.
-4. **Restrict exec** — Use `allowlist` mode, enumerate safe commands explicitly.
-5. **Monitor logs** — Watch for unexpected command execution or outbound connections.
-6. **Rotate credentials** — If you suspect exposure, rotate all API keys immediately.
-7. **Backup memory** — Your agent's memory is valuable. Backup `memory/` and `MEMORY.md` regularly.
-
-### What We Don't Do
-
-- ❌ Auto-install skills from the internet
-- ❌ Store secrets in plaintext by default (use env vars)
-- ❌ Expose admin ports publicly
-- ❌ Trust "localhost" through reverse proxies without verification
-- ❌ Allow unrestricted shell execution
-
-Security is a feature, not an afterthought. For detailed hardening, see [docs/security.md](docs/security.md).
-
-## Use Cases
-
-- **Sales teams** — Automated outreach sequences with AI follow-ups
-- **Founders** — A chief of staff that manages your inbox and calendar
-- **Agencies** — White-label AI agents for clients
-- **Support** — Inbound call handling with memory and escalation
-- **Personal** — An assistant that actually knows you
-
-## Built by Strickland AI
-
-[Strickland AI](https://stricklandai.com) builds autonomous AI agents for businesses. This starter is extracted from our production systems — the same architecture that handles real phone calls, real email campaigns, and real revenue.
-
-We open-sourced it because the agent space needs fewer demos and more operators.
-
-**Links:**
-- 🌐 [stricklandai.com](https://stricklandai.com)
-- 🐦 [@staboratory](https://x.com/staboratory)
-- 📖 [Documentation](docs/)
-
-## License
-
-MIT — do whatever you want with it. See [LICENSE](LICENSE).
+**That's it!** Your agent is running.
 
 ---
 
-<div align="center">
+## 📦 What's Included
 
-**Built by operators, for operators.**
+### Core Files
+```
+agent-starter/
+├── workspace/              # Your agent's workspace
+│   ├── AGENTS.md          # How your agent operates
+│   ├── SOUL.md            # Your agent's personality
+│   ├── USER.md            # About you
+│   ├── MEMORY.md          # Long-term memory
+│   ├── HEARTBEAT.md       # Proactive tasks
+│   └── memory/            # Daily logs
+├── skills/                # Extensible skills
+│   ├── voice-calling/     # AI voice agent skill
+│   ├── email-outreach/    # Email campaign skill
+│   ├── weather/           # Weather reports
+│   └── tmux/              # Terminal control
+├── config/
+│   └── openclaw.json      # Agent configuration
+└── setup.sh               # One-click setup
+```
 
-[⭐ Star this repo](https://github.com/stricklandai/agent-starter) if you ship an agent with it.
+### Pre-Built Skills
+- **Voice Calling** (Vapi.ai integration)
+- **Email Campaigns** (SendGrid/Postmark)
+- **SMS Messaging** (Twilio)
+- **Weather** (wttr.in)
+- **Terminal Control** (tmux)
+- **Web Research** (Brave Search)
 
-</div>
+---
+
+## 🎨 Customization
+
+### Change Your Agent's Personality
+
+Edit `workspace/SOUL.md`:
+
+```markdown
+# SOUL.md - Who You Are
+
+Be direct and efficient. Skip the fluff.
+When you don't know something, say so.
+Be proactive - anticipate what I need.
+```
+
+### Add Your Context
+
+Edit `workspace/USER.md`:
+
+```markdown
+# USER.md - About Your Human
+
+- **Name:** Your Name
+- **Timezone:** America/Chicago
+- **Work:** What you do
+- **Preferences:** How you like to communicate
+```
+
+### Configure Integrations
+
+Edit `config/openclaw.json`:
+
+```json
+{
+  "model": "anthropic/claude-sonnet-4",
+  "skills": ["voice-calling", "email-outreach"],
+  "integrations": {
+    "telegram": { "enabled": true, "token": "YOUR_TOKEN" },
+    "vapi": { "enabled": true, "apiKey": "YOUR_KEY" }
+  }
+}
+```
+
+---
+
+## 🔌 Optional Add-Ons
+
+### Voice Calling Setup
+
+1. Get Vapi.ai API key: https://vapi.ai
+2. Add to config:
+```json
+{
+  "integrations": {
+    "vapi": {
+      "enabled": true,
+      "apiKey": "YOUR_VAPI_KEY"
+    }
+  }
+}
+```
+3. Tell your agent: *"Create a voice agent named Sarah"*
+
+### Email Campaigns
+
+1. Get SendGrid API key: https://sendgrid.com
+2. Add to config:
+```json
+{
+  "integrations": {
+    "sendgrid": {
+      "enabled": true,
+      "apiKey": "YOUR_KEY",
+      "fromEmail": "you@yourdomain.com"
+    }
+  }
+}
+```
+3. Tell your agent: *"Send an email campaign to my lead list"*
+
+### Business Automation (Outreach Engine)
+
+Want full multi-tenant SaaS capabilities?
+
+**Option 1:** DIY (for developers)
+- Deploy Strickland Outreach Engine yourself
+- Connect via API
+- Full control, but more setup
+
+**Option 2:** Hosted (coming soon)
+- We host and manage everything
+- $99/month add-on to your agent
+- Zero setup, just enable and go
+
+---
+
+## 💰 Pricing
+
+**Strickland Agent Starter:**
+- **Personal Use:** FREE (open source, self-hosted)
+- **Commercial License:** $499 one-time (if reselling/white-label)
+
+**Optional Add-Ons:**
+- **Hosted Outreach Engine:** $99/month (multi-tenant sales automation)
+- **Priority Support:** $49/month
+- **Custom Skills:** $299 one-time per skill
+
+---
+
+## 🛡️ Privacy & Security
+
+**Your Data, Your Server:**
+- ✅ Runs on your own VPS (we never see your data)
+- ✅ API keys stored locally (encrypted)
+- ✅ Open source (audit the code yourself)
+- ✅ No telemetry, no tracking, no backdoors
+
+**API Keys You Control:**
+- Vapi.ai (voice calling)
+- SendGrid/Postmark (email)
+- Twilio (SMS)
+- Anthropic/OpenAI (AI models)
+
+**We never store your API keys or personal data.**
+
+---
+
+## 📖 Documentation
+
+- **Getting Started:** `docs/quickstart.md`
+- **Configuration:** `docs/configuration.md`
+- **Skills Guide:** `docs/skills.md`
+- **API Reference:** `docs/api.md`
+- **Troubleshooting:** `docs/troubleshooting.md`
+
+---
+
+## 🤝 Community
+
+- **Discord:** https://discord.gg/strickland-tech
+- **GitHub:** https://github.com/stricklandtechnology/agent-starter
+- **Docs:** https://docs.stricklandtechnology.net
+- **Email:** support@stricklandtechnology.net
+
+---
+
+## 🚀 Use Cases
+
+### Personal Assistant
+- Check emails, calendar, weather
+- Set reminders and take notes
+- Research topics and summarize content
+- Automate daily tasks
+
+### Business Automation
+- Make AI voice calls to leads
+- Send personalized email campaigns
+- Track conversations in CRM
+- Generate reports and insights
+
+### Developer Productivity
+- Control terminal sessions
+- Deploy code automatically
+- Monitor servers and services
+- Run tests and CI/CD pipelines
+
+### Content Creation
+- Research and compile information
+- Draft emails and documents
+- Generate social media posts
+- Summarize articles and videos
+
+---
+
+## 🔧 Advanced
+
+### Create Custom Skills
+
+```bash
+cd skills
+mkdir my-skill
+cd my-skill
+touch SKILL.md script.js
+```
+
+**SKILL.md:**
+```markdown
+# My Custom Skill
+
+**Description:** What this skill does
+
+**Usage:** How to invoke it
+
+**Requirements:** APIs or dependencies needed
+```
+
+**script.js:**
+```javascript
+#!/usr/bin/env node
+// Your skill logic here
+console.log('Skill executed!');
+```
+
+### Deploy to Production
+
+```bash
+# Install as systemd service
+sudo cp agent-starter.service /etc/systemd/system/
+sudo systemctl enable agent-starter
+sudo systemctl start agent-starter
+
+# Monitor logs
+sudo journalctl -u agent-starter -f
+```
+
+### Scale with Docker
+
+```bash
+# Build container
+docker build -t strickland-agent .
+
+# Run
+docker run -d \
+  -v ./workspace:/app/workspace \
+  -v ./config:/app/config \
+  --name my-agent \
+  strickland-agent
+```
+
+---
+
+## 📊 Comparison
+
+**vs. ChatGPT:**
+- ✅ Persistent memory
+- ✅ Proactive (not reactive)
+- ✅ Connects to your accounts
+- ✅ 100% private (your server)
+
+**vs. Custom AI Agent:**
+- ✅ Turnkey (no coding required)
+- ✅ Pre-built skills included
+- ✅ Production-ready
+- ✅ Community support
+
+**vs. Zapier/n8n:**
+- ✅ Conversational interface
+- ✅ AI-powered decision making
+- ✅ Multi-channel (not just workflows)
+- ✅ Learning and adaptation
+
+---
+
+## 🎯 Roadmap
+
+**v1.0 (Current):**
+- ✅ Core agent framework
+- ✅ Multi-platform messaging
+- ✅ Memory and context
+- ✅ Basic skills (weather, web, files)
+
+**v1.5 (Next Month):**
+- ⏳ Voice calling skill (Vapi integration)
+- ⏳ Email campaign skill
+- ⏳ CRM integration skill
+- ⏳ One-click deploy to Fly.io
+
+**v2.0 (Q2 2026):**
+- 📋 Visual skill builder (no-code)
+- 📋 Mobile app (iOS/Android)
+- 📋 Team collaboration (multi-user)
+- 📋 Marketplace (buy/sell skills)
+
+---
+
+## 📝 License
+
+**MIT License** (for personal use)
+
+**Commercial License Required** for:
+- Reselling as a service
+- White-labeling
+- Including in paid products
+
+Contact: licensing@stricklandtechnology.net
+
+---
+
+## 🙏 Credits
+
+Built by **Strickland Technology**  
+Powered by **OpenClaw**  
+Inspired by **JARVIS** (Iron Man)
+
+---
+
+**Turn your server into your personal AI assistant. Get started in 5 minutes.**
+
+```bash
+curl -sSL https://get.stricklandagent.com | bash
+```
+
+🚀 **Let's go.**

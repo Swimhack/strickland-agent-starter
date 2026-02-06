@@ -1,0 +1,42 @@
+{
+  "name": "strickland-agent-starter",
+  "version": "1.0.0",
+  "description": "Turnkey AI agent framework - your personal JARVIS",
+  "main": "index.js",
+  "scripts": {
+    "setup": "bash setup.sh",
+    "start": "openclaw gateway start",
+    "dev": "openclaw gateway start --dev",
+    "stop": "openclaw gateway stop",
+    "status": "openclaw gateway status"
+  },
+  "keywords": [
+    "ai-agent",
+    "personal-assistant",
+    "jarvis",
+    "automation",
+    "voice-calling",
+    "openclaw"
+  ],
+  "author": "Strickland Technology",
+  "license": "MIT",
+  "homepage": "https://stricklandtechnology.net",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stricklandtechnology/agent-starter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stricklandtechnology/agent-starter/issues",
+    "email": "support@stricklandtechnology.net"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "openclaw": "^2026.2.3"
+  },
+  "optionalDependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1"
+  }
+}
